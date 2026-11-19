@@ -61,7 +61,7 @@ static void run_comand ( char *const argv[])
     }
 }
 /***********************
- * a function to get the username fron the environment variable
+ * a function to get the username from the environment variable
  **********************/
 static const char *current_user(void)
 {
@@ -96,10 +96,24 @@ static void do_memory(void)
 }
 
 // do_biggest function builds an argv array that omits its functionality and pass it to the helper funtion (run_comand)
+// the function works on showing the list of dir/files in the provided directory
+// the biggest first
 static void do_biggest(const char *dir)
 {
     // in case of not passing a dir, the default is the current one
     const char *target= (dir && *dir)? dir : ".";
     char *argv[]= {"ls", "-lhS", (char *)target, NULL};
+    run_comand(argv);
+}
+
+// do_procs is a function that shows the processes belongs to the provided user
+// if no user provided, the default is the current user
+static void do_procs(const char *user)
+{
+    // specify the user, the current user if no user provided
+    const char *target = (user && *user)? user : current_user();
+  
+    // building an argv that support the functionality oif the function
+    char *argv[]= {"ps", "-u", (char *)target, "-o", "pid,stat,etime,cmd", "--sort=-etime",NULL};
     run_comand(argv);
 }
