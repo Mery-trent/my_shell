@@ -164,3 +164,27 @@ static int handle_line(char *line)
        printf("Unknown verb '%s'. Try 'help' for a list of valid verbs.\n", verb);
     return 1;   
 }
+
+/*****************
+ * the main function
+ *******************/
+int main (void)
+{
+    char line[LINE_MAX_LEN];
+    printf("Wellcome to my shell. Type 'help' for a list of valid verbs. \n");
+ // infinate loop
+ for(;;){
+    printf("myshell> ");
+    // flush befor fork so output is not duplicated
+    fflush(stdout);
+      
+    if(fgets(line, sizeof line, stdin)== NULL){
+        printf("\n");
+        break;
+    }
+    if(!handle_line(line))
+    break;
+ } 
+ printf("See you next time!\n");
+ return 0;  
+}
