@@ -94,3 +94,12 @@ static void do_memory(void)
     char *argv[]= { "free", "-h", NULL};
     run_comand(argv);
 }
+
+// do_biggest function builds an argv array that omits its functionality and pass it to the helper funtion (run_comand)
+static void do_biggest(const char *dir)
+{
+    // in case of not passing a dir, the default is the current one
+    const char *target= (dir && *dir)? dir : ".";
+    char *argv[]= {"ls", "-lhS", (char *)target, NULL};
+    run_comand(argv);
+}
