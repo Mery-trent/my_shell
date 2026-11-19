@@ -67,5 +67,23 @@ static const char *current_user(void)
 {
     const char *u = getenv("USER");
     return (u!= NULL && *u != '\0')? u: "root";
-    
+
+}
+/*********************
+ * Verb Handlers
+ **********************/
+// function that handle the verp "help", it displays a menu of all
+// me verbs with thier functionality
+static void do_help(void)
+{
+    printf("Valid verbs are: \n"
+            "\thelp:                Display the help menu\n"
+            "\tmemory:              shows total/used/free RAM and swap\n"
+            "\tbiggest [directory]  lists files in a directory, largest first\n"
+            "\tprocs [username]     shows a user's process, longest-running first\n"
+            "\tonline               shows who is currently logged in\n"
+            "\tlogout               exits this shell and returns to bash\n"
+            "\tNOTE: elements in square brackets are optional. Should you\n"
+            "\tomit them, the current directory / current username is used.\n" );
+            
 }
