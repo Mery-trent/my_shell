@@ -27,3 +27,36 @@ compile: gcc -Wall -o myshell assn4.c
 #define LINE_MAX_LEN 256
 #define ARG_MAX_LEN 128
 #define MAX_ARGS   16
+
+/***************
+ * Helper Function: fork a child, exec the command, wait for it. 
+ * 
+ * argv must be a null-terminated array; argv[0] is the program name
+************* */
+static void run_comand ( char *const argv[])
+{
+    pid_t pid = fork();
+
+    // case of failed fork
+    if(pid < 0){
+        perror("fork");
+        return;
+    }
+    // the child process
+    if(pid == 0){
+        execvp(argv[0], argv);
+        // case of exec failed
+        perror(argv[0]);
+        exit(127);  // comand not found
+
+    }
+    // parent wait for this child
+    int status;
+    while (waitpid(pid, &status,0)<0){
+        // retry only if interrupted
+        if (errno ! EINIR){    
+            perror("wait");
+            return;
+        }
+    }
+}
