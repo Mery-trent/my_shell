@@ -124,4 +124,43 @@ static void do_online(void)
 {
     char *argv[]= {"who", "-H", NULL};
     run_comand(argv);
+
+}
+
+/****************************
+ * handle_line function is used to parse one input line: split into verb and "rest of the line" arc. 
+ * it returns 1 if the shell should keep running and 0 to exit
+ * it also handles the logout verb so there is no need for a separate function
+ ****************************/
+static int handle_line(char *line)
+{
+    char verb [ARG_MAX_LEN]= "";
+    char arg[ARG_MAX_LEN]= "";
+
+    // strip trailing new line, whitespace
+    size_t len = strlen(line);
+    while (len >0 && (lne [len -1] == '\n' || line[len - 1] == ' ' || 
+            line[len - 1]== '\t' || line[len - 1]== '\r'))
+            line[len --]= '\0';
+    
+    // case of verb is the first word, arg single option parameter
+    if(scanf(line, "%127s %127s", verb, arg)< 1)
+    return 1; // blank line, just re-prompt    
+    
+    if(strcmp(verb, "logout")== 0)
+    return 0;  // just leave the loop
+
+    else if (strcmp(verb, "help") == 0)
+    do_help();
+    else if (strcmp(verb, "memory") == 0)
+    do_memory();
+    else if (strcmp(verb, "biggest") == 0)
+    do_biggest(arg);
+    else if (strcmp(verb, "procs") == 0)
+    do_procs(arg);
+    else if (strcmp(verb, "online") == 0)
+    do_online();
+    else
+       printf("Unknown verb '%s'. Try 'help' for a list of valid verbs.\n", verb);
+    return 1;   
 }
