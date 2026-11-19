@@ -117,3 +117,11 @@ static void do_procs(const char *user)
     char *argv[]= {"ps", "-u", (char *)target, "-o", "pid,stat,etime,cmd", "--sort=-etime",NULL};
     run_comand(argv);
 }
+
+//do_online function handles the online verb, shows who is currently logged in to the system
+// equivalent to who -H bash command
+static void do_online(void)
+{
+    char *argv[]= {"who", "-H", NULL};
+    run_comand(argv);
+}
