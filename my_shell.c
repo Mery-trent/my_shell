@@ -60,3 +60,12 @@ static void run_comand ( char *const argv[])
         }
     }
 }
+/***********************
+ * a function to get the username fron the environment variable
+ **********************/
+static const char *current_user(void)
+{
+    const char *u = getenv("USER");
+    return (u!= NULL && *u != '\0')? u: "root";
+    
+}
