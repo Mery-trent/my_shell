@@ -85,5 +85,12 @@ static void do_help(void)
             "\tlogout               exits this shell and returns to bash\n"
             "\tNOTE: elements in square brackets are optional. Should you\n"
             "\tomit them, the current directory / current username is used.\n" );
-            
+
+}
+// the following function is my_shell's equivalent to free -h bash comand
+static void do_memory(void)
+{
+    //build an argv array then pass it to run_comand function
+    char *argv[]= { "free", "-h", NULL};
+    run_comand(argv);
 }
