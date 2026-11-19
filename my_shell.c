@@ -54,7 +54,7 @@ static void run_comand ( char *const argv[])
     int status;
     while (waitpid(pid, &status,0)<0){
         // retry only if interrupted
-        if (errno ! EINIR){    
+        if (errno != EINTR){    
             perror("wait");
             return;
         }
@@ -139,12 +139,12 @@ static int handle_line(char *line)
 
     // strip trailing new line, whitespace
     size_t len = strlen(line);
-    while (len >0 && (lne [len -1] == '\n' || line[len - 1] == ' ' || 
+    while (len >0 && (line [len -1] == '\n' || line[len - 1] == ' ' || 
             line[len - 1]== '\t' || line[len - 1]== '\r'))
-            line[len --]= '\0';
+            line[--len]= '\0';
     
     // case of verb is the first word, arg single option parameter
-    if(scanf(line, "%127s %127s", verb, arg)< 1)
+    if(sscanf(line, "%127s %127s", verb, arg)< 1)
     return 1; // blank line, just re-prompt    
     
     if(strcmp(verb, "logout")== 0)
